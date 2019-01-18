@@ -1,6 +1,7 @@
 package com.nikolay.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -74,13 +75,13 @@ public class TestDepartmentService {
     }
 
     @Test
-    public void testGetDepartmentByName() {
-        LOGGER.debug("test Service: run testGetDepartmentByName()");
-        when(departmentDAOMock.getDepartmentByName("Services")).thenReturn(dep2);
-        Department department = departmentService.getDepartmentByName("Services");
-        verify(departmentDAOMock).getDepartmentByName("Services");
-        assertNotNull(department);
-        assertEquals("Services", department.getDepartmentName());
+    public void testCheckDepartmentByName() {
+        LOGGER.debug("test Service: run testCheckDepartmentByName()");
+        when(departmentDAOMock.checkDepartmentByName("Services")).thenReturn(true);
+        Boolean checkDepartment = departmentService.checkDepartmentByName("Services");
+        verify(departmentDAOMock).checkDepartmentByName("Services");
+        assertNotNull(checkDepartment);
+        assertTrue(checkDepartment);
     }
 
     @Test

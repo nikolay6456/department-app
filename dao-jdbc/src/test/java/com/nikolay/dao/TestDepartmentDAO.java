@@ -57,13 +57,11 @@ public class TestDepartmentDAO {
     }
 
     @Test
-    public void testGetDepartmentByName() {
+    public void testCheckDepartmentByName() {
         LOGGER.debug("test DAO: run testGetDepartmentByName()");
-        Department department = departmentDAO.getDepartmentByName(DEPARTMENT_NAME);
-        Assert.assertNotNull(department);
-        Assert.assertEquals(DEPARTMENT_ID, department.getId().longValue());
-        Assert.assertEquals(DEPARTMENT_NAME, department.getDepartmentName());
-        Assert.assertEquals(DEPARTMENT_AVERAGE_SALARY, department.getAverageSalary());
+        Boolean checkDepartment = departmentDAO.checkDepartmentByName(DEPARTMENT_NAME);
+        Assert.assertNotNull(checkDepartment);
+        Assert.assertTrue(checkDepartment);
     }
 
     @Test

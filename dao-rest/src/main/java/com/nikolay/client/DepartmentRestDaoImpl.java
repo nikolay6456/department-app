@@ -30,6 +30,9 @@ public class DepartmentRestDaoImpl implements DepartmentDAO {
     @Value("${department.endpoint.with.id}")
     private String urlWithIdParam;
 
+    @Value("${department.endpoint.with.name}")
+    private String urlWithNameParam;
+
     private RestTemplate restTemplate;
 
     /**
@@ -67,17 +70,11 @@ public class DepartmentRestDaoImpl implements DepartmentDAO {
     }
 
     @Override
-    public Department getDepartmentByName(String departmentName) throws ServerDataAccessException {
-        LOGGER.debug("getDepartmentByName(departmentName): departmentName = {}", departmentName);
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("name", departmentName);
-        Department department = restTemplate
-                .getForObject(builder.toUriString(), Department.class);
-        if (department == null) {
-            throw new ServerDataAccessException(
-                    "Department by name: " + departmentName + " not found");
-        }
-        return department;
+    public Boolean checkDepartmentByName(String departmentName) throws ServerDataAccessException {
+        LOGGER.debug("checkDepartmentByName(departmentName): departmentName = {}", departmentName);
+        Boolean checkDepartmentByName = restTemplate
+                .getForObject(urlWithNameParam, Boolean.class, departmentName);
+        return checkDepartmentByName;
     }
 
     @Override

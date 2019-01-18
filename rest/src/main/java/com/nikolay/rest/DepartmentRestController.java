@@ -60,6 +60,13 @@ public class DepartmentRestController {
         Department department = departmentService.getDepartmentById(id);
         return new ResponseEntity<>(department, HttpStatus.FOUND);
     }
+    
+    @GetMapping("/check/{name}")
+    public ResponseEntity<Boolean> checkDepartmentByName(@PathVariable("name") String departmentName) {
+        LOGGER.debug("checkDepartmentByName(): name = {}", departmentName);
+        Boolean checkDepartmentByName = departmentService.checkDepartmentByName(departmentName);
+        return new ResponseEntity<>(checkDepartmentByName, HttpStatus.FOUND);
+    }
 
     /**
      * Add department response entity.
