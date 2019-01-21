@@ -36,8 +36,8 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     @Value("${department.GET_DEPARTMENT_BY_ID}")
     private String GET_DEPARTMENT_BY_ID;
 
-    @Value("${department.GET_DEPARTMENT_BY_NAME}")
-    private String GET_DEPARTMENT_BY_NAME;
+    @Value("${department.CHECK_DEPARTMENT_BY_NAME}")
+    private String CHECK_DEPARTMENT_BY_NAME;
 
     @Value("${department.DELETE_DEPARTMENT}")
     private String DELETE_DEPARTMENT_BY_ID;
@@ -76,12 +76,12 @@ public class DepartmentDAOImpl implements DepartmentDAO {
     }
 
     @Override
-    public Department getDepartmentByName(String departmentName) {
-        LOGGER.debug("getDepartmentByName(departmentName): departmentName = {}", departmentName);
+    public Boolean checkDepartmentByName(String departmentName) {
+        LOGGER.debug("checkDepartmentByName(departmentName): departmentName = {}", departmentName);
         SqlParameterSource namedParameters = new MapSqlParameterSource(PARAMETER_DEPARTMENT_NAME,
                 departmentName);
         return this.namedParameterJdbcTemplate
-                .queryForObject(GET_DEPARTMENT_BY_NAME, namedParameters, departmentMapper);
+                .queryForObject(CHECK_DEPARTMENT_BY_NAME, namedParameters, Boolean.class);
     }
 
     @Override

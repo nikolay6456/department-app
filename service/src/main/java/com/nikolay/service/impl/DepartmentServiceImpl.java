@@ -48,12 +48,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentByName(String departmentName) {
-        LOGGER.debug("getDepartmentByName(departmentName): departmentName = {}", departmentName);
+    public Boolean checkDepartmentByName(String departmentName) {
+        LOGGER.debug("checkDepartmentByName(departmentName): departmentName = {}", departmentName);
         if (departmentName == null) {
             throw new OperationFailedException("Department name shouldn't be null");
         }
-        return departmentDAO.getDepartmentByName(departmentName);
+        return departmentDAO.checkDepartmentByName(departmentName);
     }
 
     @Override

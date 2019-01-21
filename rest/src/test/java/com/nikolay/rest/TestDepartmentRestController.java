@@ -80,6 +80,20 @@ public class TestDepartmentRestController {
     }
 
     @Test
+    public void testCheckDepartmentByName() throws Exception {
+        LOGGER.debug("test TestDepartmentRestController: run testCheckDepartmentByName()");
+        when(mockDepartmentService.checkDepartmentByName("Services")).thenReturn(true);
+        ObjectMapper mapper = createObjectMapperWithJacksonConverter();
+        mockMvc.perform(
+            get("/department/check/Services")
+                .accept(MediaType.APPLICATION_JSON))
+            .andDo(print())
+            .andExpect(status().isFound())
+            .andExpect(content().string(mapper.writeValueAsString(true)));
+        verify(mockDepartmentService).checkDepartmentByName("Services");
+    }
+
+    @Test
     public void testGetAllDepartments() throws Exception {
         LOGGER.debug("test TestDepartmentRestController: run testGetAllDepartments()");
         when(mockDepartmentService.getAllDepartments()).thenReturn(departments);

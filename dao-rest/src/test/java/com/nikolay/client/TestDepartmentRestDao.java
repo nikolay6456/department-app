@@ -1,6 +1,7 @@
 package com.nikolay.client;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
@@ -40,6 +41,9 @@ public class TestDepartmentRestDao {
     @Value("${department.endpoint.with.id}")
     private String urlWithIdParam;
 
+    @Value("${department.endpoint.with.name}")
+    private String urlWithNameParam;
+
     @Autowired
     private DepartmentDAO departmentRestDao;
 
@@ -72,16 +76,14 @@ public class TestDepartmentRestDao {
     }
 
     @Test
-    public void testGetDepartmentByName() {
-        LOGGER.debug("test TestDepartmentRestDao run: testGetDepartmentByName()");
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("name", "Services");
-        when(mockRestTemplate.getForObject(builder.toUriString(), Department.class))
-                .thenReturn(dep2);
-        Department department = departmentRestDao.getDepartmentByName("Services");
-        assertNotNull(department);
-        assertEquals("Services", department.getDepartmentName());
-        verify(mockRestTemplate, times(1)).getForObject(builder.toUriString(), Department.class);
+    public void testCheckDepartmentByName() {
+        LOGGER.debug("test TestDepartmentRestDao run: testCheckDepartmentByName()");
+        when(mockRestTemplate.getForObject(urlWithNameParam, Boolean.class, "Services"))
+                .thenReturn(true);
+        Boolean checkDepartmentByName = departmentRestDao.checkDepartmentByName("Services");
+        assertNotNull(checkDepartmentByName);
+        assertTrue(checkDepartmentByName);
+        verify(mockRestTemplate, times(1)).getForObject(urlWithNameParam, Boolean.class, "Services");
     }
 
     @Test

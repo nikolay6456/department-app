@@ -64,7 +64,8 @@ public class EmployeeController {
     binder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
       @Override
       public void setAsText(String text) throws IllegalArgumentException {
-        setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        if(!text.isEmpty())
+          setValue(LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
       }
     });
     binder.setValidator(employeeValidator);

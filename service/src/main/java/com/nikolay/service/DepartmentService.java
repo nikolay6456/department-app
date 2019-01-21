@@ -27,9 +27,9 @@ public interface DepartmentService {
      * Gets department by name.
      *
      * @param departmentName the department name
-     * @return the department by name
+     * @return the boolean
      */
-    Department getDepartmentByName(String departmentName);
+    Boolean checkDepartmentByName(String departmentName);
 
     /**
      * Save department long.
