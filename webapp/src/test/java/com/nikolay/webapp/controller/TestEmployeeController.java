@@ -267,7 +267,7 @@ public class TestEmployeeController {
             .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(view().name("employees"));
+        .andExpect(view().name("employeeFilter"));
     verify(mockEmployeeService).getEmployeeByDateOfBirthday(date);
   }
 
@@ -289,7 +289,7 @@ public class TestEmployeeController {
             .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(view().name("employees"));
+        .andExpect(view().name("employeeFilter"));
     verify(mockEmployeeService).getEmployeeBetweenDatesOfBirthday(dateFrom, dateTo);
   }
 
