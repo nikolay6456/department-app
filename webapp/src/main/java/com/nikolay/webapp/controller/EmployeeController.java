@@ -1,5 +1,6 @@
 package com.nikolay.webapp.controller;
 
+import com.nikolay.model.Department;
 import com.nikolay.model.Employee;
 import com.nikolay.service.DepartmentService;
 import com.nikolay.service.EmployeeService;
@@ -88,13 +89,20 @@ public class EmployeeController {
     List<Employee> employeeList;
     if (dateFrom != null && dateTo != null) {
       employeeList = employeeRestService.getEmployeeBetweenDatesOfBirthday(dateFrom, dateTo);
+      model.addAttribute("message", "List of employees born between " + 
+          dateFrom.toString() + " and " + dateTo.toString());
+      model.addAttribute("employeeList", employeeList);
+      return "employeeFilter";
     } else if (date != null) {
       employeeList = employeeRestService.getEmployeeByDateOfBirthday(date);
+      model.addAttribute("message", "List of employees born: " + date.toString());
+      model.addAttribute("employeeList", employeeList);
+      return "employeeFilter";
     } else {
       employeeList = employeeRestService.getAllEmployees();
+      model.addAttribute("employeeList", employeeList);
+      return "employees";
     }
-    model.addAttribute("employeeList", employeeList);
-    return "employees";
   }
 
   /**
@@ -105,10 +113,12 @@ public class EmployeeController {
    * @return the department page
    */
   @GetMapping("/employee/{id}")
-  public String getDepartmentPage(@PathVariable("id") Long id, Model model) {
-    LOGGER.debug("getDepartmentPage() id = {}", id);
+  public String getEmployeePage(@PathVariable("id") Long id, Model model) {
+    LOGGER.debug("getEmployeePage() id = {}", id);
     Employee employee = employeeRestService.getEmployeeById(id);
+    Department department = departmentRestService.getDepartmentById(employee.getDepartmentId());
     model.addAttribute("employee", employee);
+    model.addAttribute("departmentName", department.getDepartmentName());
     return "employee";
   }
 
